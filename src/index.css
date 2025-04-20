@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz@9..40&display=swap");
+
+@import "tailwindcss";
+@theme {
+  --font-*: initial;
+  --font-poppins: "Poppins", sans-serif;
+  --font-lato: "lato", sans-serif;
+  --font-OpenSans: "OpenSans", sans-serif;
+  --font-DMSans: "DMSans", sans-serif;
+
+  /* color theme */
+  --color-primary: #3ecf4c;
+  --color-primary-400: #6be26b;
+  --color-primary-300: #94f08b;
+  --color-primary-200: #c0fab4;
+  --color-primary-100: #e2fcd9cc;
+
+  --color-secondary: #ffbd3a;
+  --color-secondary-400: #ffd26b;
+  --color-secondary-300: #ffdf88;
+  --color-secondary-200: #ffecb0;
+  --color-secondary-100: #fff7d7cc;
+
+  --color-tertiary: #f64920;
+  --color-tertiary-400: #f98256;
+  --color-tertiary-300: #fca578;
+  --color-tertiary-200: #fecaa5;
+  --color-tertiary-100: #fee8d2cc;
+}
