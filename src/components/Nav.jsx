@@ -75,7 +75,7 @@ function Nav() {
 
         <Link to="/login">
           <img
-            src="/nav-img.png"
+            src={`${import.meta.env.BASE_URL}nav-img.png `}
             alt="profile-img"
             className="h-[44px] rounded-lg hidden md:block"
           />

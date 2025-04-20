@@ -10,7 +10,7 @@ export default function CardVideos({
     <div className="card bg-white w-full rounded-xl p-4 shadow-lg flex flex-col gap-y-3">
       <div className="flex gap-4 items-center md:flex-col">
         <img
-          src={imageUrl}
+          src={`${import.meta.env.BASE_URL + imageUrl}`}
           className="h-25 md:w-full md:h-48 md:object-cover rounded-lg"
           alt={title}
         />
@@ -20,7 +20,7 @@ export default function CardVideos({
           <p className="text-gray-500 hidden md:block text-sm">{description}</p>
           <div className="flex items-center gap-3 mt-3">
             <img
-              src={instructor.avatarUrl}
+              src={`${import.meta.env.BASE_URL + instructor.avatarUrl}`}
               className="h-9 w-9"
               alt={instructor.name}
             />
