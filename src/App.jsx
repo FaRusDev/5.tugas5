@@ -3,7 +3,7 @@ import AppRoutes from "./routes/AppRoutes"
 
 function App() {
   return (
-    <Router>
+    <Router basename="/5.tugas5">
       <AppRoutes />
     </Router>
   )
