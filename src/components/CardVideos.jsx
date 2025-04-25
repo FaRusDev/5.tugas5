@@ -5,6 +5,7 @@ export default function CardVideos({
   instructor,
   rating,
   price,
+  categories,
 }) {
   return (
     <div className="card bg-white w-full rounded-xl p-4 shadow-lg flex flex-col gap-y-3">
@@ -18,6 +19,17 @@ export default function CardVideos({
         <div className="flex flex-col gap-y-2">
           <h3 className="font-semibold text-base leading-tight">{title}</h3>
           <p className="text-gray-500 hidden md:block text-sm">{description}</p>
+          <div className="flex flex-col md:flex-row md:space-x-2 space-y-2  text-xs items-start justify-start">
+            {categories.map((category) => (
+              <span
+                key={category}
+                className="p-2 bg-orange-200 rounded-xl text-gray-700"
+              >
+                {category}
+              </span>
+            ))}
+          </div>
+
           <div className="flex items-center gap-3 mt-3">
             <img
               src={`${import.meta.env.BASE_URL + instructor.avatarUrl}`}
