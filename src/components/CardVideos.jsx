@@ -1,4 +1,5 @@
 export default function CardVideos({
+  id,
   imageUrl,
   title,
   description,

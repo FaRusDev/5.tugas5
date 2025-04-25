@@ -1,10 +1,16 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import CardVideos from "./CardVideos"
-import { courses } from "../data/courses"
+import { getAllCourses, deleteCourse } from "../data/courses"
+import { Link } from "react-router-dom"
 
 export default function Videos() {
   const [activeCategory, setActiveCategory] = useState("all")
   const [isTransitioning, setIsTransitioning] = useState(false)
+  const [courses, setCourses] = useState([])
+
+  useEffect(() => {
+    setCourses(getAllCourses)
+  }, [])
 
   const displayCategories = [
     { id: "all", catName: "Semua Kelas" },
@@ -30,6 +36,14 @@ export default function Videos() {
     }, 300)
   }
 
+  //fungsi untuk hapus course
+  const handleDelete = (id) => {
+    if (window.confirm("Yakin ingin menghapus kursus ini?")) {
+      const updatedCourses = deleteCourse(id)
+      setCourses(updatedCourses)
+    }
+  }
+
   return (
     <section id="video" className="text-center mx-auto max-w-10/12 my-6">
       <div className="flex text-start flex-col gap-y-6">
@@ -41,6 +55,13 @@ export default function Videos() {
           <p className="text-gray-500">
             Jelajahi Dunia Pengetahuan Melalui Pilihan Kami!
           </p>
+
+          <Link
+            to="/addVideo"
+            className="bg-amber-600 p-2 text-center text-white rounded-4xl max-w-2/6"
+          >
+            Tambah Video
+          </Link>
         </div>
 
         <div className="overflow-x-scroll md:overflow-auto">
@@ -87,6 +108,7 @@ export default function Videos() {
               }}
             >
               <CardVideos
+                id={course.id}
                 imageUrl={course.imageUrl}
                 title={course.title}
                 description={course.description}
@@ -95,6 +117,19 @@ export default function Videos() {
                 price={course.price}
                 categories={course.categories}
               />
+
+              <Link
+                to={`/editVideo/${course.id}`}
+                className="p-3 bg-[#F64920] mt-2 rounded-xl shadow-2xl hover:cursor-pointer text-white mr-2"
+              >
+                Edit
+              </Link>
+              <button
+                className="p-3 bg-[#F64920] mt-2 rounded-xl shadow-2xl hover:cursor-pointer text-white"
+                onClick={() => handleDelete(course.id)}
+              >
+                Hapus
+              </button>
             </div>
           ))}
 
