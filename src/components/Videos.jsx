@@ -2,15 +2,38 @@ import { useEffect, useState } from "react"
 import CardVideos from "./CardVideos"
 import { getAllCourses, deleteCourse } from "../data/courses"
 import { Link } from "react-router-dom"
+import axios from "axios"
 
 export default function Videos() {
   const [activeCategory, setActiveCategory] = useState("all")
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [courses, setCourses] = useState([])
 
+  const alamatAPI = import.meta.env.VITE_API_BASE_URL
+
   useEffect(() => {
-    setCourses(getAllCourses)
+    getCoursesDataAPI()
   }, [])
+
+  const getCoursesDataAPI = async () => {
+    try {
+      const response = await axios.get(`${alamatAPI}/courses`)
+      setCourses(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const deleteCoursesDataAPI = async (id) => {
+    try {
+      if (window.confirm("Yakin ingin menghapus kursus ini?")) {
+        await axios.delete(`${alamatAPI}/courses/${id}`)
+        getCoursesDataAPI()
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const displayCategories = [
     { id: "all", catName: "Semua Kelas" },
@@ -34,14 +57,6 @@ export default function Videos() {
     setTimeout(() => {
       setIsTransitioning(false)
     }, 300)
-  }
-
-  //fungsi untuk hapus course
-  const handleDelete = (id) => {
-    if (window.confirm("Yakin ingin menghapus kursus ini?")) {
-      const updatedCourses = deleteCourse(id)
-      setCourses(updatedCourses)
-    }
   }
 
   return (
@@ -107,13 +122,26 @@ export default function Videos() {
                 transitionDelay: isTransitioning ? "0ms" : `${index * 50}ms`,
               }}
             >
-              <CardVideos
+              {/* <CardVideos
                 id={course.id}
                 imageUrl={course.imageUrl}
                 title={course.title}
                 description={course.description}
                 instructor={course.instructor}
                 rating={course.rating}
+                price={course.price}
+                categories={course.categories}
+              /> */}
+
+              <CardVideos
+                id={course.id}
+                imageUrl={course.imageUrl}
+                title={course.title}
+                description={course.description}
+                avatarUrl={course.avatarUrl}
+                rating_stars={course.rating_stars}
+                rating_count={course.rating_count}
+                instructor_name={course.instructor_name}
                 price={course.price}
                 categories={course.categories}
               />
@@ -126,7 +154,7 @@ export default function Videos() {
               </Link>
               <button
                 className="p-3 bg-[#F64920] mt-2 rounded-xl shadow-2xl hover:cursor-pointer text-white"
-                onClick={() => handleDelete(course.id)}
+                onClick={() => deleteCoursesDataAPI(course.id)}
               >
                 Hapus
               </button>
