@@ -1,7 +1,16 @@
 import Nav from "../components/Nav"
 import { Link } from "react-router-dom"
+import { useLogin } from "../services/zustandData"
 
 export default function Login() {
+  const { username, setUsername } = useLogin()
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setUsername(e.target.email.value)
+    console.log(username)
+  }
+
   return (
     <>
       <Nav />
@@ -19,7 +28,11 @@ export default function Login() {
             </p>
           </div>
 
-          <form action="#" className="flex flex-col gap-y-6">
+          <form
+            onSubmit={handleSubmit}
+            action="#"
+            className="flex flex-col gap-y-6"
+          >
             <div className="htmlForm-group flex flex-col gap-y-1">
               <label htmlFor="email" className="flex flex-row gap-x-2">
                 <p className="font-DMSans text-gray-500 leading-tight text-sm font-normal tracking-wide">

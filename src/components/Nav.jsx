@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom"
+import { useLogin } from "../services/zustandData"
 
 function Nav() {
+  const { username } = useLogin()
+
   return (
     <nav className="w-full bg-white text-center fixed z-50 shadow-md">
       <div className="max-w-10/12 mx-auto flex flex-row items-center justify-between gap-x-12 py-5">
@@ -71,6 +74,14 @@ function Nav() {
           <a href="#" className="text-gray-500 text-sm hidden md:block">
             Kategori
           </a>
+
+          {!username ? (
+            <p className="text-gray-500 text-sm hidden md:block">
+              data dari zustand
+            </p>
+          ) : (
+            <p className="text-gray-500 text-sm hidden md:block">{username}</p>
+          )}
         </div>
 
         <Link to="/login">
