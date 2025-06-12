@@ -1,34 +1,46 @@
 export default function CardVideos({
+  id,
   imageUrl,
   title,
   description,
-  instructor,
-  rating,
+  instructor_name,
+  avatarUrl,
+  rating_stars,
+  rating_count,
   price,
+  categories,
 }) {
   return (
     <div className="card bg-white w-full rounded-xl p-4 shadow-lg flex flex-col gap-y-3">
-      <div className="flex gap-4 items-center md:flex-col">
+      <div className="flex gap-4 flex-col md:flex-col">
         <img
-          src={imageUrl}
+          // src={`${import.meta.env.BASE_URL + imageUrl}`}
+          src={`${imageUrl}`}
           className="h-25 md:w-full md:h-48 md:object-cover rounded-lg"
           alt={title}
         />
 
-        <div className="flex flex-col gap-y-2">
+        <div className="flex flex-col gap-y-2 ">
           <h3 className="font-semibold text-base leading-tight">{title}</h3>
-          <p className="text-gray-500 hidden md:block text-sm">{description}</p>
+          <p className="text-gray-500 hidden md:block overflow-hidden text-sm ">
+            {description}
+          </p>
+          <div className="flex flex-col md:flex-row md:space-x-2 space-y-2  text-xs items-start justify-start">
+            {(categories?.length ? categories : [""]).map((category) => (
+              <span
+                key={category}
+                className="p-2 bg-orange-200 rounded-xl text-gray-700"
+              >
+                {category || "no categories"}
+              </span>
+            ))}
+          </div>
+
           <div className="flex items-center gap-3 mt-3">
-            <img
-              src={instructor.avatarUrl}
-              className="h-9 w-9"
-              alt={instructor.name}
-            />
+            <img src={avatarUrl} className="h-9 w-9" alt={name} />
             <div>
-              <p className="text-sm font-medium">{instructor.name}</p>
-              <p className="text-xs text-gray-500 mt-1">
-                {instructor.position}
-              </p>
+              <p className="text-sm font-medium">{instructor_name}</p>
+              <p className="text-xs text-gray-500 mt-1">position</p>
             </div>
           </div>
         </div>
@@ -37,9 +49,9 @@ export default function CardVideos({
       <div className="flex flex-row justify-between items-center">
         <div className="flex flex-row items-center gap-2">
           {/* Render rating stars based on rating.stars */}
-          <RatingStars stars={rating.stars} />
+          <RatingStars stars={rating_stars} />
           <p className="text-xs text-gray-500 underline">
-            {rating.stars}({rating.count})
+            {rating_stars}({rating_count})
           </p>
         </div>
         <p className="font-semibold text-xl text-primary">{price}</p>
@@ -50,8 +62,14 @@ export default function CardVideos({
 
 // Komponen bintang rating terpisah
 function RatingStars({ stars }) {
-  const fullStars = Math.floor(stars)
-  const hasHalfStar = stars % 1 >= 0.5
+  // Konversi ke number dan handle NaN/undefined/null
+  const numericStars = Number(stars) || 0
+
+  // Normalisasi nilai antara 0-5
+  const normalizedStars = Math.min(Math.max(0, numericStars), 5)
+
+  const fullStars = Math.floor(normalizedStars)
+  const hasHalfStar = normalizedStars % 1 >= 0.5
   const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0)
 
   return (
